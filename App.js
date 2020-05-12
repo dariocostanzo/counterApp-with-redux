@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import CounterApp from './components/CounterApp';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import counterReducer from './store/reducers/counter';
+
 /**
  * Store - holds our state - THERE IS ONLY ONE STATE
  * Action - State can be modified using actions - SIMPLE OBJECTS
@@ -21,25 +23,31 @@ import { Provider } from 'react-redux';
 */
 
 //3. creating an initialState for the reducer
-const initialState = {
-  count: 0
-};
+// const initialState = {
+//   count: 0
+// };
 
-// 2. create a reducer, which needs to have access to the state in order to be able to modify it
-const reducer = (state = initialState, action) => {
-  // 7. gets the actions from mapDispatchToProps
-  switch (action.type) {
-    case 'INCREASE_COUNTER':
-      return { count: state.count + 1 };
-    case 'DECREASE_COUNTER':
-      return { count: state.count - 1 };
-  }
-  return state;
-};
+// // 2. create a reducer, which needs to have access to the state in order to be able to modify it
+// const reducer = (state = initialState, action) => {
+//   // 7. gets the actions from mapDispatchToProps
+//   switch (action.type) {
+//     case 'INCREASE_COUNTER':
+//       return { count: state.count + 1 };
+//     case 'DECREASE_COUNTER':
+//       return { count: state.count - 1 };
+//   }
+//   return state;
+// };
 
 // 1. the store needs a reducer to be able to modify the state
 // pass a reducer and create it (const reducer)
-const store = createStore(reducer);
+// const store = createStore(reducer);
+
+const rootReducer = combineReducers({
+  counter: counterReducer
+});
+
+const store = createStore(rootReducer);
 
 const App = () => {
   return (
